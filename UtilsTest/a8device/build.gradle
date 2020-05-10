@@ -1,0 +1,49 @@
+apply plugin: 'com.android.library'
+
+apply plugin: 'maven'
+
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    uploadArchives{
+        repositories.mavenDeployer{
+            // 本地仓库路径D:\WorkSpace
+//        repository(url: uri('../repository'))
+            repository(url:"file://D://jar_lib/repository/")
+            // 唯一标识
+            pom.groupId = "com.chengkai.mylib"
+            // 项目名称
+            pom.artifactId = "myaar"
+            // 版本号
+            pom.version = "1.0.0"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation files('libs/usdk_api_aidl_v2.3.3.20190628.jar')
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}
